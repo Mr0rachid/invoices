@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InvoicesController;
+use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\SectionController;
 
 /*
@@ -22,15 +23,25 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+Route::get('/register',function(){
+    return view('auth.register');
+});
+
 // Route::get('/register',[login::class,'register'])->name('inscription');
 
-Auth::routes(['register' => false]);
+Auth::routes(['register' => true]);
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+Route::get('/products',[ProductsController::class, 'index'])->name('products');
+
+Route::post('/store',[ProductsController::class, 'store'])->name('store');
 
 Route::resource('invoices',InvoicesController::class);
 
 Route::resource('section', SectionController::class);
+
+Route::patch('updateproduct',[ProductsController::class , 'update'])->name('updateproduct');
 
 Route::patch('update',[SectionController::class ,'update'])->name('update');
 

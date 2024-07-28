@@ -38,13 +38,6 @@ class SectionController extends Controller
                 'section_name.unique' => 'هدا القسم موجود مسبقا',
                 'description.required' => 'يرجى ملاء الوصف'
         ]);
-
-
-        // $exists = section::where('section_name','=',$input['section'])->exists();
-        // if($exists){
-        //     session()->flash('error','خطاء القسم مسجل مسبقا');
-        //     return redirect('/section');
-        // }else{
             section::create([
                 'section_name' => $request->section_name,
                 'description' => $request->description,
