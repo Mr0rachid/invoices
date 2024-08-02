@@ -2,19 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\invoices;
-use App\Models\section;
+use App\Models\test2;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-class InvoicesController extends Controller
+class Test2Controller extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('invoices.invoices');
+        //
     }
 
     /**
@@ -22,8 +20,7 @@ class InvoicesController extends Controller
      */
     public function create()
     {
-        $sections = section::all();
-        return view('invoices.create',compact('sections'));
+        //
     }
 
     /**
@@ -37,7 +34,7 @@ class InvoicesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(invoices $invoices)
+    public function show(test2 $test2)
     {
         //
     }
@@ -45,7 +42,7 @@ class InvoicesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(invoices $invoices)
+    public function edit(test2 $test2)
     {
         //
     }
@@ -53,7 +50,7 @@ class InvoicesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, invoices $invoices)
+    public function update(Request $request, test2 $test2)
     {
         //
     }
@@ -61,13 +58,8 @@ class InvoicesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(invoices $invoices)
+    public function destroy(test2 $test2)
     {
         //
-    }
-
-    public function getproducts($id){
-        $products = DB::table('products')->where("section_id",$id)->pluck("product_name","id");
-        return json_encode($products);
     }
 }

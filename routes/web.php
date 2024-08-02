@@ -33,9 +33,15 @@ Auth::routes(['register' => true]);
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::get('/products',[ProductsController::class, 'index'])->name('products');
+Route::get('idsection/{id}',[InvoicesController::class , 'getproducts'])->name('bb');
+
+Route::get('/products',[ProductsController::class, 'index'])->name('product');
+
+Route::delete('destroyproduct',[ProductsController::class , 'destroy'])->name('deleted');
 
 Route::post('/store',[ProductsController::class, 'store'])->name('store');
+
+Route::get('create',[InvoicesController::class,'create'])->name('create');
 
 Route::resource('invoices',InvoicesController::class);
 

@@ -84,7 +84,7 @@ class SectionController extends Controller
             'description' => $request->description
         ]);
 
-        session()->flash('edit','تم تعديل القسم بنجاخ');
+        session()->flash('edit','تم تعديل القسم بنجاح');
         return redirect('/section');
     }
 

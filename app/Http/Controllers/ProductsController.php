@@ -23,7 +23,7 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        //
+        // 
     }
 
     /**
@@ -34,10 +34,8 @@ class ProductsController extends Controller
         $validate = $request->validate([
             'product_name' => 'required',
             'section_id' => 'required',
-            'description' => 'required'
         ],[
             'product_name.required' => 'يرجى ادخال المنتج',
-            'description.required' => 'يرجى اضافة الوصف',
             'section_id.required' => 'يرجى اختيار نوع القسم'
         ]);
 
@@ -70,16 +68,33 @@ class ProductsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, products $products)
+    public function update(Request $request)
     {
-        return $request;
+        $id = section::where('section_name',$request->section_name)->first()->id;
+        $product = products::findOrFail($request->id);
+        $validate = $request->validate([
+            'product_name' => 'required',
+        ],[
+            'product_name.required' => 'يرجى ملاء خانة المنتج',
+        ]);
+        $product->update([
+            'product_name' => $request->product_name,
+            'description' => $request->description,
+            'section_id' => $id,
+        ]);
+
+        session()->flash('edit','تم تعديل المنتج بنجاح');
+        return back();
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(products $products)
+    public function destroy(Request $request)
     {
-        //
+        $product = products::findOrFail($request->id);
+        $product->delete();
+        session()->flash('delete','تم عملية الحذف بنجاح');
+        return back();
     }
 }

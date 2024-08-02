@@ -47,6 +47,22 @@ Invoices - قائمة المنتجات
 					</button>
 				</div>	
 		 @endif
+		 @if(session()->has('edit'))
+		 <div class="alert alert-success alert-dismissible fade show" role="alert">
+					<strong>{{session()->get('edit')}}</strong>
+					<button class="colse" type="button" data-dismiss="alert" aria-label="close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>	
+		 @endif
+		 @if(session()->has('delete'))
+		 <div class="alert alert-success alert-dismissible fade show" role="alert">
+					<strong>{{session()->get('delete')}}</strong>
+					<button class="colse" type="button" data-dismiss="alert" aria-label="close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>	
+		 @endif
 		<!-- row -->
 		<div class="row">
 		<div class="col-xl-12">
@@ -74,7 +90,9 @@ Invoices - قائمة المنتجات
 										$i = 0
 										@endphp
 										@foreach($products as $product)
-											{{$i++}}
+										@php
+										$i++
+										@endphp
 											<tr>
 											<td>{{$i}}</td>
 												<td>{{$product->product_name}}</td>
@@ -82,7 +100,7 @@ Invoices - قائمة المنتجات
 												<td>{{$product->description}}</td>
 												<td>
 													<button class="btn btn-outline-success btn-sm" data-id="{{$product->id}}" data-product_name = "{{$product->product_name}}" data-section_name = "{{$product->section->section_name}}" data-description = "{{$product->description}}" data-toggle = "modal" data-target = "#edit">تعديل</button>
-													<button class="btn btn-outline-danger btn-sm" data-product_id = "{{$product->id}}" data-product_name = "{{$product->product_name}}" data-toggle="modal" data-target="#modeldemo9">حذف</button>
+													<button class="btn btn-outline-danger btn-sm" data-product_id = "{{$product->id}}" data-product_name = "{{$product->product_name}}" data-toggle="modal" data-target="#modaldemo9">حذف</button>
 												</td>
 											</tr>
 										@endforeach
@@ -104,7 +122,7 @@ Invoices - قائمة المنتجات
 								{{ csrf_field() }}
 							<div class="form-group">
 								<label>اسم منتج</label>
-								<input type="text" class="form-control" id="section_name" name="product_name">
+								<input type="text" class="form-control" id="product_name" name="product_name">
 							</div>
 							<div class="form-group">
 								<label for="">القسم</label>
@@ -152,7 +170,7 @@ Invoices - قائمة المنتجات
 							</div>
 							<div class="form-group">
 								<label for="">القسم</label>
-								<select name="section_id" id="section_id" class="form-control">
+								<select name="section_name" id="section_name" class="form-control">
 								@foreach($section as $item)
 								<option {{$item->id}} >{{$item->section_name}}</option>
 								@endforeach
@@ -169,6 +187,30 @@ Invoices - قائمة المنتجات
 					</div>
 					</form>
 				</div>
+			</div>
+		</div>
+		{{-- delete --}}
+		<div class="modal" id="modaldemo9">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content modal-content-demo">
+					<div class="modal-header">
+						<h6 class="modal-title">حذف القسم</h6>
+						<button aria-label="Close" class="close" data-dismiss="modal"type="button"><span aria-hidden="true">&times;</span></button>
+					</div>
+					<form action="{{route('deleted')}}" method="post">
+						{{method_field('delete')}}
+						{{csrf_field()}}
+						<div class="modal-body">
+							<p>هل انت متاكد من عملية الحذف ؟</p><br>
+							<input type="hidden" name="id" id="id">
+							<input class="form-control" name="section_name" id="section_name" type="text" readonly>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
+							<button type="submit" class="btn btn-danger">تاكيد</button>
+						</div>
+				</div>
+				</form>
 			</div>
 		</div>
 		<!-- row closed -->
@@ -211,6 +253,17 @@ Invoices - قائمة المنتجات
 		modal.find('.modal-body #section_name').val(section_name);
 		modal.find('.modal-body #description').val(description);
 		
+	})
+</script>
+
+<script>
+	$('#modaldemo9').on('show.bs.modal', function(event) {
+		var button = $(event.relatedTarget)
+		var id = button.data('product_id')
+		var product_name = button.data('product_name')
+		var modal = $(this)
+		modal.find('.modal-body #id').val(id);
+		modal.find('.modal-body #section_name').val(product_name);
 	})
 </script>
 
