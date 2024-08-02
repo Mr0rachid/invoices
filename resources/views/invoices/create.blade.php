@@ -121,7 +121,7 @@
 
                             <div class="col">
                                 <label for="inputName" class="control-label">نسبة ضريبة القيمة المضافة</label>
-                                <select name="Rate_VAT" id="Rate_VAT" class="form-control" onchange="myFunction()">
+                                <select name="Rate_VAT" id="Rate_VAT" class="form-control" onchange="myfunc()">
                                     <!--placeholder-->
                                     <option value="" selected disabled>حدد نسبة الضريبة</option>
                                     <option value=" 5%">5%</option>
@@ -207,6 +207,7 @@
     <script src="{{ URL::asset('assets/js/form-elements.js') }}"></script>
     
     <script>
+        // that for selector product 
         $(document).ready(function(){
             $('select[name="section"]').on('change',function(){
                 var sectionid = $(this).val();
@@ -229,7 +230,34 @@
                 }
             });
         });
+
     </script>
 
+    <script>
+                // that for calculater 
+        function myfunc(){
+            var commission = parseFloat(document.getElementById("Amount_Commission").value);
+            console.log(commission);
+            var discount = parseFloat(document.getElementById("Discount").value);
+            console.log(discount);
+            var rate = parseFloat(document.getElementById("Rate_VAT").value);
+            console.log(rate);
+            var value = parseFloat(document.getElementById("Value_VAT").value);
+            console.log(value);
+
+            var commission2 = commission - discount;
+
+            if(typeof commission === 'undefined' || !commission){
+                alert('يرجى ادخال مبلغ العمولة');
+            }else{
+                var intresult = commission2 * rate / 100;
+                var intresult2 = parseFloat(intresult + commission2);
+                sumq = parseFloat(intresult).toFixed(2);
+                sumt = parseFloat(intresult2).toFixed(2);
+                document.getElementById("Value_VAT").value = sumq;
+                document.getElementById("Total").value = sumt;
+            }
+        }
+    </script>
 
 @endsection 

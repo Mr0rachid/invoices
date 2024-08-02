@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\y;
+use App\Models\invoices_attachements;
 use Illuminate\Http\Request;
 
-class YController extends Controller
+class InvoicesAttachementsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class YController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(y $y)
+    public function show(invoices_attachements $invoices_attachements)
     {
         //
     }
@@ -42,7 +42,7 @@ class YController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(y $y)
+    public function edit(invoices_attachements $invoices_attachements)
     {
         //
     }
@@ -50,7 +50,7 @@ class YController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, y $y)
+    public function update(Request $request, invoices_attachements $invoices_attachements)
     {
         //
     }
@@ -58,7 +58,7 @@ class YController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(y $y)
+    public function destroy(invoices_attachements $invoices_attachements)
     {
         //
     }

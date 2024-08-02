@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\test1;
+use App\Models\invoices_details;
 use Illuminate\Http\Request;
 
-class Test1Controller extends Controller
+class InvoicesDetailsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class Test1Controller extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(test1 $test1)
+    public function show(invoices_details $invoices_details)
     {
         //
     }
@@ -42,7 +42,7 @@ class Test1Controller extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(test1 $test1)
+    public function edit(invoices_details $invoices_details)
     {
         //
     }
@@ -50,7 +50,7 @@ class Test1Controller extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, test1 $test1)
+    public function update(Request $request, invoices_details $invoices_details)
     {
         //
     }
@@ -58,7 +58,7 @@ class Test1Controller extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(test1 $test1)
+    public function destroy(invoices_details $invoices_details)
     {
         //
     }
