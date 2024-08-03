@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\invoices;
 use App\Models\section;
+use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -31,7 +32,23 @@ class InvoicesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        invoices::create([
+            'invoice-number' => $request->invoice_number,
+            'invoice-date' => $request->invoice_Date,
+            'due_date' => $request->Due_date,
+            'product' => $request->product,
+            'section_id' => $request->section,
+            'amount_collection' => $request->Amount_collection,
+            'amount_commission' => $request->Amount_Commission,
+            'discount' => $request->Discount,
+            'rate-vat' => $request->Rate_VAT,
+            'value-vat' => $request->Value_VAT,
+            'total' => $request->Total,
+            'status' => 'غير مدفوعة',
+            'value-status' => 2,
+            'note' => $request->note,
+            'user' => $request->user,
+        ]);
     }
 
     /**

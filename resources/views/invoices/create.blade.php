@@ -45,13 +45,14 @@
         <div class="col-lg-12 col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('invoices.store') }}" method="post" enctype="multipart/form-data"
+                    <form action="{{ route('storeinvoices') }}" method="post" enctype="multipart/form-data"
                         autocomplete="off">
                         {{ csrf_field() }}
                         {{-- 1 --}}
 
                         <div class="row">
                             <div class="col">
+                                <input type="text" name="user" value="{{Auth::user()->name}}" hidden>
                                 <label for="inputName" class="control-label">رقم الفاتورة</label>
                                 <input type="text" class="form-control" id="inputName" name="invoice_number"
                                     title="يرجي ادخال رقم الفاتورة" required>

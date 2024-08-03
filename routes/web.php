@@ -45,6 +45,8 @@ Route::get('create',[InvoicesController::class,'create'])->name('create');
 
 Route::resource('invoices',InvoicesController::class);
 
+Route::post('/store',[InvoicesController::class,'store'])->name('storeinvoices');
+
 Route::resource('section', SectionController::class);
 
 Route::patch('updateproduct',[ProductsController::class , 'update'])->name('updateproduct');
