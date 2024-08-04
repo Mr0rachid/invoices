@@ -28,4 +28,8 @@ class invoices extends Model
     ];
 
     protected $dates = ['deleted_at'];
+
+    public function section(){
+        return $this->belongsTo('section');
+    }
 }

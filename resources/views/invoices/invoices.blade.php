@@ -22,7 +22,7 @@
                     الفواتير</span>
             </div>
         </div>
-
+        
     </div>
     <!-- breadcrumb -->
 @endsection
@@ -31,6 +31,14 @@
     <!-- row -->
     <div class="row">
         <!--div-->
+        @if (session()->has('add'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{session()->get('add')}}</strong>
+            <button class="colse" type="button" data-dismiss="alert" aria-label="close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>	
+        @endif
         <div class="col-xl-12">
             <div class="card mg-b-20">
                 <div class="card-header pb-0">
@@ -70,8 +78,8 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td><a
-                                                href=""></a>
+                                        <td>
+                                            <a href=""></a>
                                         </td>
                                         <td></td>
                                         <td></td>
@@ -245,11 +253,5 @@
         })
 
     </script>
-
-
-
-
-
-
 
 @endsection

@@ -30,18 +30,16 @@
 @endsection
 @section('content')
 
-    @if (session()->has('Add'))
+    <!-- row -->
+    <div class="row">
+        @if (session()->has('add'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>{{ session()->get('Add') }}</strong>
+            <strong>{{ session()->get('add') }}</strong>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
     @endif
-
-    <!-- row -->
-    <div class="row">
-
         <div class="col-lg-12 col-md-12">
             <div class="card">
                 <div class="card-body">
@@ -66,7 +64,7 @@
 
                             <div class="col">
                                 <label>تاريخ الاستحقاق</label>
-                                <input class="form-control fc-datepicker" name="Due_date" placeholder="YYYY-MM-DD"
+                                <input class="form-control fc-datepicker bestdate" name="Due_date" placeholder="YYYY-MM-DD"
                                     type="text" required>
                             </div>
 
@@ -259,6 +257,9 @@
                 document.getElementById("Total").value = sumt;
             }
         }
+    </script>
+    <script>
+         $('.bestdate').datepicker({dateFormat: 'yy-mm-dd'});
     </script>
 
 @endsection 

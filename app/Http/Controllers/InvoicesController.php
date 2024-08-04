@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\invoices;
+use App\Models\invoices_attachements;
+use App\Models\invoices_details;
 use App\Models\section;
 use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class InvoicesController extends Controller
 {
@@ -47,8 +50,39 @@ class InvoicesController extends Controller
             'status' => 'غير مدفوعة',
             'value-status' => 2,
             'note' => $request->note,
-            'user' => $request->user,
+            'user' => $request->user
         ]);
+
+        $invoice_id = invoices::latest()->first()->id;
+        invoices_details::create([
+            'id_invoice' => $invoice_id,
+            'invoice_number'=> $request->invoice_number,
+            'product' => $request->product,
+            'Section_id' => $request->section,
+            'Status' => 'غير مدفوعة',
+            'value_Status' => 2,
+            'note' => $request->note,
+            'user' => $request->user
+        ]);
+
+        if($request->hasFile('pic')){
+            $invoice_id = invoices::latest()->first()->id;
+            $file_name = $request->file('pic')->getClientOriginalName();
+            $invoice_number = $request->invoice_number;
+
+            $attachments = new invoices_attachements();
+            $attachments->file_name = $file_name;
+            $attachments->invoice_number = $invoice_number;
+            $attachments->created_by = Auth::user()->name;
+            $attachments->invoice_id = $invoice_id;
+            $attachments->save();
+
+            $name_image = $request->pic->getClientOriginalName();
+            $request->pic->move(public_path('attachements/'.$invoice_number),$name_image);
+        }
+
+        session()->flash('add','تم اضافة الفاتورة بنجاح');
+        return back();
     }
 
     /**
