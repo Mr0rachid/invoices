@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InvoicesController;
+use App\Http\Controllers\InvoicesDetailsController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\SectionController;
 
@@ -34,6 +35,8 @@ Auth::routes(['register' => true]);
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::get('idsection/{id}',[InvoicesController::class , 'getproducts'])->name('bb');
+
+Route::get('/invoicesdetails/{id}',[InvoicesDetailsController::class , 'details']);
 
 Route::get('/products',[ProductsController::class, 'index'])->name('product');
 

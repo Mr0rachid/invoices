@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\invoices;
+use App\Models\invoices_attachements;
 use App\Models\invoices_details;
 use Illuminate\Http\Request;
 
@@ -23,6 +25,13 @@ class InvoicesDetailsController extends Controller
         //
     }
 
+    public function details($id){
+        $invoice = invoices::where('section_id',$id)->first();
+        $details = invoices_details::where('section_id',$id)->first();
+        $id_invoice = $invoice->id;
+        $attachements = invoices_attachements::where('invoice_id',$id_invoice)->first();
+        return view('invoices.details',compact('invoice','details','id_invoice','attachements'));
+    }
     /**
      * Store a newly created resource in storage.
      */

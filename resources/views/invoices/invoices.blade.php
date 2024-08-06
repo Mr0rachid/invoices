@@ -72,71 +72,77 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                    <tr>
-                                        <td></td>
-                                        <td> </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>
-                                            <a href=""></a>
-                                        </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>
+                                @foreach ($invoices as $invoice)
+                                <tr>
+                                    <td>{{$invoice->id}}</td>
+                                    <td>{{$invoice['invoice-number']}}</td>
+                                    <td>{{$invoice['invoice-date']}}</td>
+                                    <td>{{$invoice->due_date}}</td>
+                                    <td>{{$invoice->product}}</td>
+                                    <td>
+                                        <a href="{{url('invoicesdetails')}}/{{$invoice->section_id}}">{{$invoice->section->section_name}}</a>
+                                    </td>
+                                    <td>{{$invoice->discount}}</td>
+                                    <td>{{$invoice['rate-vat']}}</td>
+                                    <td>{{$invoice['value-vat']}}</td>
+                                    <td>{{$invoice->total}}</td>
+                                    <td>
+                                        @if ($invoice['value-status'] === 2)
+                                            <span class="text-danger">{{$invoice->status}}</span>
+                                        @elseif($invoice['value-status'] === 1)
+                                            <span class="text-success">{{$invoice->status}}</span>
+                                        @else
+                                            <span class="text-warning">{{$invoice->status}}</span>
+                                        @endif
+                                    </td>
+                                    <td>{{$invoice->note}}</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <button aria-expanded="false" aria-haspopup="true"
+                                                class="btn ripple btn-primary btn-sm" data-toggle="dropdown"
+                                                type="button">العمليات<i class="fas fa-caret-down ml-1"></i></button>
+                                            <div class="dropdown-menu tx-13">
+                                                @can('تعديل الفاتورة')
+                                                    <a class="dropdown-item"
+                                                        href="">تعديل
+                                                        الفاتورة</a>
+                                                @endcan
 
-                                        </td>
+                                                @can('حذف الفاتورة')
+                                                    <a class="dropdown-item" href="#" data-invoice_id=""
+                                                        data-toggle="modal" data-target="#delete_invoice"><i
+                                                            class="text-danger fas fa-trash-alt"></i>&nbsp;&nbsp;حذف
+                                                        الفاتورة</a>
+                                                @endcan
 
-                                        <td></td>
-                                        <td>
-                                            <div class="dropdown">
-                                                <button aria-expanded="false" aria-haspopup="true"
-                                                    class="btn ripple btn-primary btn-sm" data-toggle="dropdown"
-                                                    type="button">العمليات<i class="fas fa-caret-down ml-1"></i></button>
-                                                <div class="dropdown-menu tx-13">
-                                                    @can('تعديل الفاتورة')
-                                                        <a class="dropdown-item"
-                                                            href="">تعديل
-                                                            الفاتورة</a>
-                                                    @endcan
+                                                @can('تغير حالة الدفع')
+                                                    <a class="dropdown-item"
+                                                        href=""><i
+                                                            class=" text-success fas
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                fa-money-bill"></i>&nbsp;&nbsp;تغير
+                                                        حالة
+                                                        الدفع</a>
+                                                @endcan
 
-                                                    @can('حذف الفاتورة')
-                                                        <a class="dropdown-item" href="#" data-invoice_id=""
-                                                            data-toggle="modal" data-target="#delete_invoice"><i
-                                                                class="text-danger fas fa-trash-alt"></i>&nbsp;&nbsp;حذف
-                                                            الفاتورة</a>
-                                                    @endcan
+                                                @can('ارشفة الفاتورة')
+                                                    <a class="dropdown-item" href="#" data-invoice_id=""
+                                                        data-toggle="modal" data-target="#Transfer_invoice"><i
+                                                            class="text-warning fas fa-exchange-alt"></i>&nbsp;&nbsp;نقل الي
+                                                        الارشيف</a>
+                                                @endcan
 
-                                                    @can('تغير حالة الدفع')
-                                                        <a class="dropdown-item"
-                                                            href=""><i
-                                                                class=" text-success fas
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    fa-money-bill"></i>&nbsp;&nbsp;تغير
-                                                            حالة
-                                                            الدفع</a>
-                                                    @endcan
-
-                                                    @can('ارشفة الفاتورة')
-                                                        <a class="dropdown-item" href="#" data-invoice_id=""
-                                                            data-toggle="modal" data-target="#Transfer_invoice"><i
-                                                                class="text-warning fas fa-exchange-alt"></i>&nbsp;&nbsp;نقل الي
-                                                            الارشيف</a>
-                                                    @endcan
-
-                                                    @can('طباعةالفاتورة')
-                                                        <a class="dropdown-item" href=""><i
-                                                                class="text-success fas fa-print"></i>&nbsp;&nbsp;طباعة
-                                                            الفاتورة
-                                                        </a>
-                                                    @endcan
-                                                </div>
+                                                @can('طباعةالفاتورة')
+                                                    <a class="dropdown-item" href=""><i
+                                                            class="text-success fas fa-print"></i>&nbsp;&nbsp;طباعة
+                                                        الفاتورة
+                                                    </a>
+                                                @endcan
                                             </div>
+                                        </div>
 
-                                        </td>
-                                    </tr>
-
+                                    </td>
+                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
