@@ -6,6 +6,8 @@ use App\Models\invoices;
 use App\Models\invoices_attachements;
 use App\Models\invoices_details;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Filesystem\FilesystemAdapter;
 
 class InvoicesDetailsController extends Controller
 {
@@ -25,12 +27,15 @@ class InvoicesDetailsController extends Controller
         //
     }
 
+    public function view($number,$file){
+        return response()->file(public_path('attachements/'.$number.'/'.$file));
+    }
+
     public function details($id){
-        $invoice = invoices::where('section_id',$id)->first();
-        $details = invoices_details::where('section_id',$id)->first();
-        $id_invoice = $invoice->id;
-        $attachements = invoices_attachements::where('invoice_id',$id_invoice)->first();
-        return view('invoices.details',compact('invoice','details','id_invoice','attachements'));
+        $invoice = invoices::where('id',$id)->first();
+        $details = invoices_details::where('id_invoice',$id)->get();
+        $attachements = invoices_attachements::where('invoice_id',$id)->get();
+        return view('invoices.details',compact('invoice','details','attachements'));
     }
     /**
      * Store a newly created resource in storage.

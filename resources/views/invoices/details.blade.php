@@ -1,16 +1,4 @@
-<p>invoices:</p>
-<pre>
-    {{$invoice}}
-</pre>
-<p>detaills</p>
-<pre>
-    {{$details}}
-</pre>
-<p>attachements</p>
-{{$id_invoice}}
-<pre>
-    {{$attachements}}
-</pre>
+
 
 @extends('layouts.master')
 @section('css')
@@ -60,16 +48,142 @@
 											<div class="panel-body tabs-menu-body main-content-body-right border">
 												<div class="tab-content">
 													<div class="tab-pane active" id="tab4">
-														At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.
+														<div class="card-body">
+															<div class="table-responsive">
+																<table id="example1" class="table key-buttons text-md-nowrap" data-page-length='50'style="text-align: center">
+																	<thead>
+																		<tr>
+																			<th class="border-bottom-0">رقم الفاتورة</th>
+																			<th class="border-bottom-0">تاريخ الاصدار</th>
+																			<th class="border-bottom-0">تاريخ الاستحقاق</th>
+																			<th class="border-bottom-0">القسم</th>
+																			<th class="border-bottom-0">المنتج</th>
+																			<th class="border-bottom-0">مبلغ التحصيل</th>
+																			<th class="border-bottom-0">مبلغ العمولة</th>
+																			<th class="border-bottom-0">الخصم</th>
+																			<th class="border-bottom-0">نسبة الضريبة</th>
+																			<th class="border-bottom-0">قيمة الضريبة</th>
+																			<th class="border-bottom-0">الاجمالي</th>
+																			<th class="border-bottom-0">الحالة</th>
+																			<th class="border-bottom-0">ملاحظات</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		
+																		<tr>
+																			<td>{{$invoice['invoice-number']}}</td>
+																			<td>{{$invoice['invoice-date']}}</td>
+																			<td>{{$invoice->due_date}}</td>
+																			<td>{{$invoice->section->section_name}}</td>
+																			<td>{{$invoice->product}}</td>
+																			<td>{{$invoice->amount_collection}}</td>
+																			<td>{{$invoice->amount_commission}}</td>
+																			<td>{{$invoice->discount}}</td>
+																			<td>{{$invoice['rate-vat']}}</td>
+																			<td>{{$invoice['value-vat']}}</td>
+																			<td>{{$invoice->total}}</td>
+																			<td>{{$invoice->status}}</td>
+																			<td>{{$invoice->note}}</td>
+																		</tr>
+																	</tbody>
+																</table>
+															</div>
+														</div>
 													</div>
 													<div class="tab-pane" id="tab5">
-														<p>dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.</p>
-														<p>Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime</p>
-														<p class="mb-0">placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.</p>
+														<div class="card-body">
+															<div class="table-responsive">
+																<table id="example1" class="table key-buttons text-md-nowrap" data-page-length='50'style="text-align: center">
+																	<thead>
+																		<tr>
+																			<th class="border-bottom-0">#</th>
+																			<th class="border-bottom-0">رقم الفاتورة</th>
+																			<th class="border-bottom-0">القسم</th>
+																			<th class="border-bottom-0">نوع المنتج</th>
+																			<th class="border-bottom-0">تاريخ الاضافة</th>
+																			<th class="border-bottom-0">ملاحظات</th>
+																			<th class="border-bottom-0">حالة الدفع</th>
+																			<th class="border-bottom-0">تاريخ الدفع</th>
+																			<th class="border-bottom-0">المستخدم</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		@php
+																			$i = 0;
+																		@endphp
+																		@foreach ($details as $detail)
+																			{{$i++}}
+																			<tr>
+																				<td>{{$i}}</td>
+																				<td>{{$detail->invoice_number}}</td>
+																				<td>{{$invoice->section->section_name}}</td>
+																				<td>{{$detail->product}}</td>
+																				<td>{{$detail->created_at}}</td>
+																				<td>{{$detail->note}}</td>
+																				<td>
+																					@if ($detail->value_status === 2)
+																						<span class="badge badge-pill text-danger">{{$invoice->status}}</span>
+																					@elseif($detail->value_Status === 1)
+																						<span class="badge badge-pill text-success">{{$invoice->status}}</span>
+																					@else
+																						<span class="badge badge-pill text-warning">{{$invoice->status}}</span>
+																					@endif
+																				</td>
+																				<td>{{$invoice->payment_date}}</td>
+																				<td>{{$detail->user}}</td>
+																			</tr>
+																		@endforeach
+																	</tbody>
+																</table>
+															</div>
+														</div>
 													</div>
 													<div class="tab-pane" id="tab6">
-														<p>praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident,</p>
-														<p class="mb-0">similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.</p>
+														<div class="card-body">
+															<div class="table-responsive">
+																<table id="example1" class="table key-buttons text-md-nowrap" data-page-length='50'style="text-align: center">
+																	<thead>
+																		<tr>
+																			<th class="border-bottom-0">#</th>
+																			<th class="border-bottom-0">اسم الملف</th>
+																			<th class="border-bottom-0">الاضافة</th>
+																			<th class="border-bottom-0">تاريخ الاضافة</th>
+																			<th class="border-bottom-0">العمليات</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		@php
+																			$i = 0;
+																		@endphp
+																		@foreach ($attachements as $attachement)
+																		{{$i++}}
+																		<tr>
+																			<td>{{$i}}</td>
+																			<td>{{$attachement->file_name}}</td>
+																			<td>{{$attachement->created_by}}</td>
+																			<td>{{$attachement->created_at}}</td>
+																			<td colspan="2">
+																				<a href="{{url('view_file')}}/{{$attachement->invoice_number}}/{{$attachement->file_name}}"
+																				class="btn btn-outline-success btn-sm" role="button"><i class="fas fa-eye"></i>&nbsp;عرض
+																				</a>
+																				<a href="{{url('download')}}/{{$attachement->invoice_number}}/{{$attachement->file_name}}"
+																				class="btn btn-outline-info btn-sm" role="button"><i class="fas fa-download"></i>&nbsp;تحميل
+																				</a>
+																				<button
+																				class="btn btn-outline-danger btn-sm"
+																				data-toggle="modal"
+																				data-file_name="{{$attachement->file_name}}"
+																				data-invoice_number="{{$attachement->invoice_number}}"
+																				data-id_file="{{$attachement->id}}"
+																				data-target="#delete_file"
+																				>حدف</button>
+																			</td>
+																		</tr>
+																		@endforeach
+																	</tbody>
+																</table>
+															</div>
+														</div>
 													</div>
 												</div>
 											</div>

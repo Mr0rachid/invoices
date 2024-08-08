@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\invoices_attachements;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
 
 class InvoicesAttachementsController extends Controller
 {

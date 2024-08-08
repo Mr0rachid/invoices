@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\InvoicesAttachementsController;
 use App\Http\Controllers\InvoicesController;
 use App\Http\Controllers\InvoicesDetailsController;
 use App\Http\Controllers\ProductsController;
@@ -47,6 +48,10 @@ Route::post('/store',[ProductsController::class, 'store'])->name('store');
 Route::get('create',[InvoicesController::class,'create'])->name('create');
 
 Route::resource('invoices',InvoicesController::class);
+
+Route::get('/view_file/{invoice_number}/{file_name}',[InvoicesDetailsController::class , 'view']);
+
+Route::get('/download/{invoice_number}/{file_name}',[InvoicesDetailsController::class , 'download']);
 
 Route::post('/store',[InvoicesController::class,'store'])->name('storeinvoices');
 

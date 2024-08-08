@@ -21,6 +21,6 @@ class invoices_details extends Model
     ];
 
     public function section(){
-        $this->belongsTo('section');
+        return $this->belongsTo('App\Models\section');
     }
 }
