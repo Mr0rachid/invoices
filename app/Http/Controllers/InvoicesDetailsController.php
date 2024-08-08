@@ -22,11 +22,18 @@ class InvoicesDetailsController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function delete(Request $request)
     {
-        //
+        $attachement = invoices_attachements::findOrFail($request->id_file);
+        $attachement->delete();
+        Storage::disk('public_upload')->delete($request->invoice_number.'/'.$request->file_name);
+        session()->flash('delete','تم حدف المرفق بنجاح');
+        return back();
     }
 
+    public function download($number,$file){
+        return response()->download(public_path('attachements/'.$number.'/'.$file));
+    }
     public function view($number,$file){
         return response()->file(public_path('attachements/'.$number.'/'.$file));
     }

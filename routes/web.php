@@ -53,6 +53,8 @@ Route::get('/view_file/{invoice_number}/{file_name}',[InvoicesDetailsController:
 
 Route::get('/download/{invoice_number}/{file_name}',[InvoicesDetailsController::class , 'download']);
 
+Route::post('delete_file',[InvoicesDetailsController::class , 'delete'])->name('delete_file');
+
 Route::post('/store',[InvoicesController::class,'store'])->name('storeinvoices');
 
 Route::resource('section', SectionController::class);
