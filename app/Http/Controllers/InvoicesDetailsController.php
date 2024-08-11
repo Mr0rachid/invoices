@@ -8,15 +8,34 @@ use App\Models\invoices_details;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Filesystem\FilesystemAdapter;
+use Illuminate\Support\Facades\Auth;
 
 class InvoicesDetailsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function add(Request $request)
     {
-        //
+        $this->validate($request,[
+            'file_name' => 'mimes:jpg,jpeg,png,pdf',
+        ],[
+            'file_name.mimes' => 'pdf , png , jpeg , jpg :يجب ان تكون بهده الصياغ'
+        ]);
+
+        $file_name = $request->file('file_name')->getClientOriginalName();
+        $attachement = new invoices_attachements();
+        $attachement->file_name = $file_name;
+        $attachement->invoice_number = $request->invoice_number;
+        $attachement->invoice_id = $request->invoice_id;
+        $attachement->created_by = Auth::user()->name;
+        $attachement->save();
+
+        $image = $request->file('file_name');
+        $image->move(public_path('//attachements/'.$request->invoice_number),$file_name);
+        
+        session()->flash('add','تم اضافة المرفق بنجاح');
+        return back();
     }
 
     /**
@@ -26,7 +45,7 @@ class InvoicesDetailsController extends Controller
     {
         $attachement = invoices_attachements::findOrFail($request->id_file);
         $attachement->delete();
-        Storage::disk('public_upload')->delete($request->invoice_number.'/'.$request->file_name);
+        unlink(public_path('attachements/'.$request->invoice_number.'/'.$request->file_name));
         session()->flash('delete','تم حدف المرفق بنجاح');
         return back();
     }

@@ -89,9 +89,11 @@ class InvoicesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(invoices $invoices)
+    public function editenvoice($id)
     {
-        //
+        $invoices = invoices::where('id',$id)->first();
+        $sections = section::all();
+        return view('invoices.edit_envoice',compact('invoices','sections'));
     }
 
     /**

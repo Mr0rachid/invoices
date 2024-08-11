@@ -24,11 +24,29 @@
 				<!-- row opened -->
 				<div class="row row-sm">
 					@if (session()->has('delete'))
+						<div class="alert alert-danger alert-dismissible fade show" role="alert">
+							<strong>{{session()->get('delete')}}</strong>
+							<button class="colse" type="button" data-dismiss="alert" aria-label="close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+					@endif
+					@if (session()->has('add'))
+						<div class="alert alert-success alert-dismissible fade show" role="alert">
+							<strong>{{session()->get('add')}}</strong>
+							<button class="colse" type="button" data-dismiss="alert" aria-label="close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+					@endif
+					@if ($errors->any())
 					<div class="alert alert-danger alert-dismissible fade show" role="alert">
-						<strong>{{session()->get('delete')}}</strong>
+						@foreach ($errors->all() as $error)
+						<strong>{{$error}}</strong>
 						<button class="colse" type="button" data-dismiss="alert" aria-label="close">
 							<span aria-hidden="true">&times;</span>
 						</button>
+						@endforeach
 					</div>
 					@endif
 					<div class="col-xl-12">
@@ -73,6 +91,7 @@
 																			<th class="border-bottom-0">الاجمالي</th>
 																			<th class="border-bottom-0">الحالة</th>
 																			<th class="border-bottom-0">ملاحظات</th>
+																			<th class="border-bottom-0">العمليات</th>
 																		</tr>
 																	</thead>
 																	<tbody>
@@ -91,6 +110,15 @@
 																			<td>{{$invoice->total}}</td>
 																			<td>{{$invoice->status}}</td>
 																			<td>{{$invoice->note}}</td>
+																			<td>
+																				<div class="dropdown">
+																					<button aria-expanded="false" aria-haspopup="true" class="btn ripple btn-primary"
+																					data-toggle="dropdown" id="dropdownMenuButton" type="button">العمليات <i class="fas fa-caret-down ml-1"></i></button>
+																					<div  class="dropdown-menu tx-13">
+																						<a class="dropdown-item" href="{{url('editinvoice',['id'=>$invoice->id])}}">تعديل</a>
+																					</div>
+																				</div>
+																			</td>
 																		</tr>
 																	</tbody>
 																</table>
@@ -147,7 +175,22 @@
 													</div>
 													<div class="tab-pane" id="tab6">
 														<div class="card-body">
-															<div class="table-responsive">
+															<div class="card card-statistics">
+																<div class="card-body">
+																	<p class="text-danger">صيغة المرفق: pdf , png , jpeg , jpg</p>
+																	<h5 class="card-title">اضافة مرفقات</h5>
+																	<form action="{{route('add_attachement')}}" method="post" enctype="multipart/form-data">
+																		{{ csrf_field() }}
+																		<div class="custom-file">
+																			<input type="file" name="file_name" class="from-control" id="customFile" required><br><br>
+																			<input type="text" name="invoice_id" value="{{$invoice->id}}" hidden>
+																			<input type="text" name="invoice_number" value="{{$invoice['invoice-number']}}" hidden>
+																			<button class="btn btn-primary btn-sm" name="uploadfile">تاكيد</button>
+																		</div>
+																	</form>
+																</div>
+															</div>
+															<div class="table-responsive mt-15">
 																<table id="example1" class="table key-buttons text-md-nowrap" data-page-length='50'style="text-align: center">
 																	<thead>
 																		<tr>

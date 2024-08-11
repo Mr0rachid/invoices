@@ -35,6 +35,7 @@ Auth::routes(['register' => true]);
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
+
 Route::get('idsection/{id}',[InvoicesController::class , 'getproducts'])->name('bb');
 
 Route::get('/invoicesdetails/{id}',[InvoicesDetailsController::class , 'details']);
@@ -49,13 +50,19 @@ Route::get('create',[InvoicesController::class,'create'])->name('create');
 
 Route::resource('invoices',InvoicesController::class);
 
+Route::get('/editinvoice/{id}' , [InvoicesController::class , 'editenvoice']);
+
+Route::patch('invoices/update' , [InvoicesController::class , 'update']);
+
 Route::get('/view_file/{invoice_number}/{file_name}',[InvoicesDetailsController::class , 'view']);
 
 Route::get('/download/{invoice_number}/{file_name}',[InvoicesDetailsController::class , 'download']);
 
 Route::post('delete_file',[InvoicesDetailsController::class , 'delete'])->name('delete_file');
 
-Route::post('/store',[InvoicesController::class,'store'])->name('storeinvoices');
+Route::post('/creations',[InvoicesController::class,'store'])->name('storeinvoices');
+
+Route::post('addattachement',[InvoicesDetailsController::class , 'add'])->name('add_attachement');
 
 Route::resource('section', SectionController::class);
 
