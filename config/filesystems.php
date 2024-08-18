@@ -36,9 +36,9 @@ return [
             'throw' => false,
         ],
 
-        'public_upload' => [
+        'loc' => [
             'driver' => 'local',
-            'root' => public_path() . 'app/public/attachements',
+            'root' => base_path('public'),
         ],
 
         'public' => [

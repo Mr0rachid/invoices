@@ -30,6 +30,16 @@
 
     <!-- row -->
     <div class="row">
+        @if (session()->has('delete'))
+        <script>
+            window.onload = function(){
+                notif({
+                    msg:"deleting is finishing",
+                    type:"success"
+                })
+            }
+        </script>
+        @endif
         <!--div-->
         @if (session()->has('add'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -52,6 +62,7 @@
 
                 </div>
                 <div class="card-body">
+                    {{-- <button onclick="not14()" class="btn btn-primary mg-t-5">Customize Background</button> --}}
                     <div class="table-responsive">
                         <table id="example1" class="table key-buttons text-md-nowrap" data-page-length='50'style="text-align: center">
                             <thead>
@@ -259,5 +270,6 @@
         })
 
     </script>
+    
 
 @endsection

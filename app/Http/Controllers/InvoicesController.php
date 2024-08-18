@@ -10,6 +10,8 @@ use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class InvoicesController extends Controller
 {
@@ -109,15 +111,40 @@ class InvoicesController extends Controller
      */
     public function update(Request $request, invoices $invoices)
     {
-        //
+        $invoice = invoices::findOrFail($request->invoice_id);
+        $invoice->update([
+            'invoice-number' => $request->invoice_number,
+            'invoice-date' => $request->invoice_Date,
+            'due_date' => $request->Due_date,
+            'product' => $request->product,
+            'section_id' => $request->Section,
+            'amount_collection' => $request->Amount_collection,
+            'amount_commission' => $request->Amount_Commission,
+            'discount' => $request->Discount,
+            'rate-vat' => $request->Rate_VAT,
+            'value-vat' => $request->Value_VAT,
+            'total' => $request->Total,
+            'note' => $request->note,
+            'user' => Auth::user()->name
+        ]);
+        session()->flash('edit','تم تعديل الفاتورة بنجاح');
+        return back();
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(invoices $invoices)
+    public function destroy(Request $request)
     {
-        //
+        $id = $request->invoice_id;
+        $invoice = invoices::where('id',$id)->first();
+        $attachement = invoices_attachements::where('invoice_id',$id)->first();
+        
+        Storage::disk('loc')->deleteDirectory('attachements/'.$attachement->invoice_number);
+        
+        $invoice->forceDelete();
+        session()->flash('delete');
+        return redirect('/invoices');
     }
 
     public function getproducts($id){

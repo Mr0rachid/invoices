@@ -116,6 +116,7 @@
 																					data-toggle="dropdown" id="dropdownMenuButton" type="button">العمليات <i class="fas fa-caret-down ml-1"></i></button>
 																					<div  class="dropdown-menu tx-13">
 																						<a class="dropdown-item" href="{{url('editinvoice',['id'=>$invoice->id])}}">تعديل</a>
+																						<a class="dropdown-item" data-toggle="modal" data-target="#delete_invoice" data-id="{{$invoice->id}}" href="{{url('editinvoice',['id'=>$invoice->id])}}"><i class="text-danger fas fa-trash-alt">&nbsp;حذف</i></a>
 																					</div>
 																				</div>
 																			</td>
@@ -247,7 +248,7 @@
 				</div>
 				<!-- /row -->
 
-				<!-- delete -->
+				<!-- delete attachement -->
 				<div class="modal fade" id="delete_file" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 				aria-hidden="true">
 				<div class="modal-dialog" role="document">
@@ -279,6 +280,36 @@
 					</div>
 				</div>
 			</div>
+			{{-- delete invoice --}}
+			<div class="modal fade" id="delete_invoice" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+				aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">حذف الفاتورة</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<form action="{{route('delete_invoice')}}" method="post">
+							{{method_field('delete')}}
+							{{ csrf_field() }}
+							<div class="modal-body">
+								<p class="text-center">
+								<h6 style="color:red"> هل انت متاكد من عملية حذف الفاتورة ؟</h6>
+								</p>
+								<input type="hidden" name="invoice_id" id="invoice_id" value="">
+		
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">الغاء</button>
+								<button type="submit" class="btn btn-danger">تاكيد</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			{{-- fin --}}
 			</div>
 			<!-- Container closed -->
 		</div>
@@ -314,5 +345,14 @@
 		modal.find('.modal-body #file_name').val(file);
 		modal.find('.modal-body #invoice_number').val(number);
 	});
+</script>
+
+<script>
+	$('#delete_invoice').on('show.bs.modal',function(event){
+		var button = $(event.relatedTarget)
+		var id = button.data('id')
+		var modal = $(this)
+		modal.find('.modal-body #invoice_id').val(id);
+	})
 </script>
 @endsection

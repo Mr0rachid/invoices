@@ -171,9 +171,7 @@
             </div>
         </div>
     </div>
-
     </div>
-
     <!-- row closed -->
     </div>
     <!-- Container closed -->
@@ -212,33 +210,33 @@
         }).val();
 
     </script>
-{{-- 
-    <script>
-        $(document).ready(function() {
-            $('select[name="Section"]').on('change', function() {
-                var SectionId = $(this).val();
-                if (SectionId) {
-                    $.ajax({
-                        url: "{{ URL::to('section') }}/" + SectionId,
-                        type: "GET",
-                        dataType: "json",
-                        success: function(data) {
-                            $('select[name="product"]').empty();
-                            $.each(data, function(key, value) {
-                                $('select[name="product"]').append('<option value="' +
-                                    value + '">' + value + '</option>');
+
+<script>
+    // that for selector product 
+    $(document).ready(function(){
+        $('select[name="Section"]').on('change',function(){
+            var sectionid = $(this).val();
+            if(sectionid){
+                $.ajax({
+                    url: "{{URL::to('idsection')}}/"+sectionid,
+                    type:"GET",
+                    datatype:"json",
+                    success: function(data){
+                        $('select[name="product"]').empty();
+                        $.each(JSON.parse("["+data+"]"), function(num,mydata){
+                            $.each(mydata ,function(key,value){
+                                $('select[name="product"]').append('<option value="'+value+'">'+value+'</option>');
                             });
+                        });
                         },
                     });
-
-                } else {
-                    console.log('AJAX load did not work');
-                }
-            });
-
+                }else{
+                console.log('ajax load did not work');
+            }
         });
+    });
 
-    </script>
+</script>
 
 
      <script>
@@ -273,7 +271,7 @@
 
         }
 
-    </script> --}} 
+    </script> 
 
 
 @endsection

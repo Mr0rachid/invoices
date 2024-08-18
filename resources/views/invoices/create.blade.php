@@ -67,7 +67,6 @@
                                 <input class="form-control fc-datepicker bestdate" name="Due_date" placeholder="YYYY-MM-DD"
                                     type="text" required>
                             </div>
-
                         </div>
 
                         {{-- 2 --}}

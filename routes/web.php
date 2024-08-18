@@ -50,6 +50,8 @@ Route::get('create',[InvoicesController::class,'create'])->name('create');
 
 Route::resource('invoices',InvoicesController::class);
 
+Route::delete('/delete_invoice',[InvoicesController::class , 'destroy'])->name('delete_invoice');
+
 Route::get('/editinvoice/{id}' , [InvoicesController::class , 'editenvoice']);
 
 Route::patch('invoices/update' , [InvoicesController::class , 'update']);
