@@ -9,6 +9,7 @@ use App\Http\Controllers\InvoicesController;
 use App\Http\Controllers\InvoicesDetailsController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\SectionController;
+use App\Models\invoices_details;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,7 +55,11 @@ Route::delete('/delete_invoice',[InvoicesController::class , 'destroy'])->name('
 
 Route::get('/editinvoice/{id}' , [InvoicesController::class , 'editenvoice']);
 
+Route::get('/show_invoice/{id}',[InvoicesController::class , 'show_invoice']);
+
 Route::patch('invoices/update' , [InvoicesController::class , 'update']);
+
+Route::post('status_update/{id}',[InvoicesController::class , 'show'])->name('status_update');
 
 Route::get('/view_file/{invoice_number}/{file_name}',[InvoicesDetailsController::class , 'view']);
 

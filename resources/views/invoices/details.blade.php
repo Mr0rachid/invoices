@@ -157,15 +157,15 @@
 																				<td>{{$detail->created_at}}</td>
 																				<td>{{$detail->note}}</td>
 																				<td>
-																					@if ($detail->value_status === 2)
-																						<span class="badge badge-pill text-danger">{{$invoice->status}}</span>
+																					@if ($detail->value_Status === 2)
+																						<span class="badge badge-pill text-danger">{{$detail->Status}}</span>
 																					@elseif($detail->value_Status === 1)
-																						<span class="badge badge-pill text-success">{{$invoice->status}}</span>
+																						<span class="badge badge-pill text-success">{{$detail->Status}}</span>
 																					@else
-																						<span class="badge badge-pill text-warning">{{$invoice->status}}</span>
+																						<span class="badge badge-pill text-warning">{{$detail->Status}}</span>
 																					@endif
 																				</td>
-																				<td>{{$invoice->payment_date}}</td>
+																				<td>{{$detail->payment_date}}</td>
 																				<td>{{$detail->user}}</td>
 																			</tr>
 																		@endforeach

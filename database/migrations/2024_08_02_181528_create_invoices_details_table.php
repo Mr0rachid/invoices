@@ -20,8 +20,9 @@ return new class extends Migration
             $table->unsignedBigInteger('Section_id');
             $table->foreign('Section_id')->references('id')->on('sections')->onDelete('cascade');
             $table->string('Status',50);
-            $table->string('value_Status',50);
+            $table->integer('value_Status',50);
             $table->text('note')->nullable();
+            $table->date('payment_date')->nullable();
             $table->string('user',300);
             $table->timestamps();
         });

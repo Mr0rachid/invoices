@@ -101,9 +101,47 @@ class InvoicesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(invoices $invoices)
+    public function show(Request $request,$id)
     {
-        //
+        $invoices = invoices::findOrFail($id);
+        
+        if($request->Status === 'مدفوعة'){
+            $invoices->update([
+                'status' => $request->Status,
+                'value-status' => 1,
+                'payment_date' => $request->payment_Date
+            ]);
+            invoices_details::create([
+                'id_invoice' => $request->invoice_id,
+                'invoice_number' => $request->invoice_number,
+                'product' => $request->product,
+                'Section_id' => $request->Section,
+                'Status' => $request->Status,
+                'value_Status' => 1,
+                'payment_date' => $request->payment_Date,
+                'note' => $request->note,
+                'user' => (Auth::user()->name),
+            ]);
+        }else{
+            $invoices->update([
+                'value-status' => 3,
+                'status' => $request->Status,
+                'payment_date' => $request->payment_Date
+            ]);
+            invoices_details::create([
+                'id_invoice' => $request->invoice_id,
+                'invoice_number' => $request->invoice_number ,
+                'product' => $request->product ,
+                'Section_id' => $request->Section ,
+                'Status' => $request->Status ,
+                'value_Status' => 3,
+                'payment_date' => $request->payment_Date,
+                'note' => $request->note ,
+                'user' => (Auth::user()->name),
+            ]);
+        }
+        session()->flash('edit','تم تحديث حالة الدفع بنجاح');
+        return back();
     }
 
     /**
@@ -150,5 +188,10 @@ class InvoicesController extends Controller
     public function getproducts($id){
         $products = DB::table('products')->where("section_id",$id)->pluck("product_name","id");
         return json_encode($products);
+    }
+
+    public function show_invoice($id){
+        $invoices = invoices::where('id',$id)->first();
+        return view('invoices.show_invoice',compact('invoices'));
     }
 }
