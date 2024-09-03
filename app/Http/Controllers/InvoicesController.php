@@ -84,7 +84,7 @@ class InvoicesController extends Controller
             $request->pic->move(public_path('attachements/'.$invoice_number),$name_image);
         }
 
-        session()->flash('add','تم اضافة الفاتورة بنجاح');
+        session()->flash('add');
         return back();
     }
 
@@ -177,13 +177,17 @@ class InvoicesController extends Controller
         $id = $request->invoice_id;
         $invoice = invoices::where('id',$id)->first();
         $attachement = invoices_attachements::where('invoice_id',$id)->first();
+        if(!empty($attachement)){
+            Storage::disk('loc')->deleteDirectory('attachements/'.$attachement->invoice_number);
+        }
         
-        Storage::disk('loc')->deleteDirectory('attachements/'.$attachement->invoice_number);
-        
-        $invoice->forceDelete();
+        $invoice->Delete();
         session()->flash('delete');
         return redirect('/invoices');
+        
     }
+
+    
 
     public function getproducts($id){
         $products = DB::table('products')->where("section_id",$id)->pluck("product_name","id");
@@ -193,5 +197,18 @@ class InvoicesController extends Controller
     public function show_invoice($id){
         $invoices = invoices::where('id',$id)->first();
         return view('invoices.show_invoice',compact('invoices'));
+    }
+
+    public function paid(){
+        $invoices = invoices::where('status','مدفوعة')->get();
+        return view('invoices.invoices_paid',compact('invoices'));
+    }
+    public function nonpaid(){
+        $invoices = invoices::where('status','غير مدفوعة')->get();
+        return view('invoices.invoices_nonpaid',compact('invoices'));
+    }
+    public function partial(){
+        $invoices = invoices::where('status','مدفوعة جزئيا')->get();
+        return view('invoices.invoices_partial',compact('invoices'));
     }
 }

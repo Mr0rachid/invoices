@@ -34,8 +34,18 @@
         <script>
             window.onload = function(){
                 notif({
-                    msg:"deleting is finishing",
-                    type:"darnger"
+                    msg:"تمت عملية الحدف",
+                    type:"warning"
+                })
+            }
+        </script>
+        @endif
+        @if (session()->has('updated'))
+        <script>
+            window.onload = function(){
+                notif({
+                    msg:"تم استرجاع الفاتورة",
+                    type:"success"
                 })
             }
         </script>
@@ -56,16 +66,6 @@
         @endif
         <div class="col-xl-12">
             <div class="card mg-b-20">
-                <div class="card-header pb-0">
-                        <a href="{{route('create')}}" class="modal-effect btn btn-sm btn-primary" style="color:white"><i
-                                class="fas fa-plus"></i>&nbsp; اضافة فاتورة</a>
-
-                    @can('تصدير EXCEL')
-                        <a class="modal-effect btn btn-sm btn-primary" href="{{ url('export_invoices') }}"
-                            style="color:white"><i class="fas fa-file-download"></i>&nbsp;تصدير اكسيل</a>
-                    @endcan
-
-                </div>
                 <div class="card-body">
                     {{-- <button onclick="not14()" class="btn btn-primary mg-t-5">Customize Background</button> --}}
                     <div class="table-responsive">
@@ -123,9 +123,8 @@
                                             <button aria-expanded="false" aria-haspopup="true" class="btn ripple btn-primary"
                                             data-toggle="dropdown" id="dropdownMenuButton" type="button">العمليات <i class="fas fa-caret-down ml-1"></i></button>
                                             <div  class="dropdown-menu tx-13">
-                                                <a class="dropdown-item" href="{{url('editinvoice',['id'=>$invoice->id])}}">تعديل</a>
-                                                <a class="dropdown-item" data-toggle="modal" data-target="#delete_invoice" data-id="{{$invoice->id}}" href="{{url('editinvoice',['id'=>$invoice->id])}}"><i class="text-danger fas fa-trash-alt">&nbsp;حذف</i></a>
-                                                <a class="dropdown-item" href="{{url('show_invoice',['id'=>$invoice->id])}}"><i class="text-success fas fa-money-bill">&nbsp;عملية الدفع</i></a>
+                                                <a type="submit" class="dropdown-item" data-toggle="modal" data-target="#delete_invoice" data-id="{{$invoice->id}}"><i class="text-danger fas fa-trash-alt">&nbsp;حذف</i></a>
+                                                <a type="submit" class="dropdown-item" data-toggle="modal" data-target="#Transfer_invoice" data-id="{{$invoice->id}}"><i class="text-warning fas fa-exchange-alt">&nbsp;الغاء الحدف</i></a>
                                             </div>
                                         </div>
                                     </td>
@@ -142,34 +141,34 @@
 
     <!-- حذف الفاتورة -->
     <div class="modal fade" id="delete_invoice" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">حذف الفاتورة</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <form action="{{ route('invoices.destroy', 'test') }}" method="post">
-                        {{ method_field('delete') }}
-                        {{ csrf_field() }}
-                </div>
-                <div class="modal-body">
-                    هل انت متاكد من عملية الحذف ؟
-                    <input type="hidden" name="invoice_id" id="invoice_id" value="">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
-                    <button type="submit" class="btn btn-danger">تاكيد</button>
-                </div>
-                </form>
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">حذف الفاتورة</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <form action="{{ route('archive.destroy', 'test') }}" method="post">
+                    {{ method_field('delete') }}
+                    {{ csrf_field() }}
             </div>
+            <div class="modal-body">
+                هل انت متاكد من عملية الحذف ؟
+                <input type="hidden" name="invoice_id" id="invoice_id" value="">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
+                <button type="submit" class="btn btn-danger">تاكيد</button>
+            </div>
+            </form>
         </div>
     </div>
+</div>
 
 
     <!-- ارشيف الفاتورة -->
-    <div class="modal fade" id="Transfer_invoice" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    {{-- <div class="modal fade" id="Transfer_invoice" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -195,8 +194,36 @@
                 </form>
             </div>
         </div>
-    </div>
+    </div> --}}
+    {{-- الغاء الحذف --}}
+    <div class="modal fade" id="Transfer_invoice" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">ارشفة الفاتورة</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <form action="{{ route('archive.update', 'test') }}" method="post">
+                        {{ method_field('patch') }}
+                        {{ csrf_field() }}
+                </div>
+                <div class="modal-body">
+                    هل انت متاكد من عملية الارشفة ؟
+                    <input type="hidden" name="invoice_id" id="invoice_id" value="">
+                    <input type="hidden" name="id_page" id="id_page" value="2">
 
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
+                    <button type="submit" class="btn btn-success">تاكيد</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
     </div>
     <!-- row closed -->
     </div>

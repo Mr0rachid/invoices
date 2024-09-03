@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    قائمة الفواتير
+    قائمة الفواتير غير المدفوعة
 @stop
 @section('css')
     <!-- Internal Data table css -->
@@ -19,7 +19,7 @@
         <div class="my-auto">
             <div class="d-flex">
                 <h4 class="content-title mb-0 my-auto">الفواتير</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/ قائمة
-                    الفواتير</span>
+                    الفواتير غير المدفوعة</span>
             </div>
         </div>
         
@@ -35,7 +35,7 @@
             window.onload = function(){
                 notif({
                     msg:"deleting is finishing",
-                    type:"darnger"
+                    type:"success"
                 })
             }
         </script>
@@ -241,7 +241,7 @@
     <script>
         $('#Transfer_invoice').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget)
-            var invoice_id = button.data('id')
+            var invoice_id = button.data('invoice_id')
             var modal = $(this)
             modal.find('.modal-body #invoice_id').val(invoice_id);
         })

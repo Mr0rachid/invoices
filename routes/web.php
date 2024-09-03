@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ArchiveController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
@@ -51,6 +52,8 @@ Route::get('create',[InvoicesController::class,'create'])->name('create');
 
 Route::resource('invoices',InvoicesController::class);
 
+Route::resource('archive',ArchiveController::class);
+
 Route::delete('/delete_invoice',[InvoicesController::class , 'destroy'])->name('delete_invoice');
 
 Route::get('/editinvoice/{id}' , [InvoicesController::class , 'editenvoice']);
@@ -70,6 +73,14 @@ Route::post('delete_file',[InvoicesDetailsController::class , 'delete'])->name('
 Route::post('/creations',[InvoicesController::class,'store'])->name('storeinvoices');
 
 Route::post('addattachement',[InvoicesDetailsController::class , 'add'])->name('add_attachement');
+
+Route::get('nonpaid',[InvoicesController::class , 'nonpaid']);
+Route::get('paid',[InvoicesController::class , 'paid']);
+Route::get('partial',[InvoicesController::class , 'partial']);
+
+Route::get('archive',[ArchiveController::class , 'index']);
+
+Route::get('delete/{id}',[InvoicesController::class , 'delete']);
 
 Route::resource('section', SectionController::class);
 

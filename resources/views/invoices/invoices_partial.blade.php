@@ -19,7 +19,7 @@
         <div class="my-auto">
             <div class="d-flex">
                 <h4 class="content-title mb-0 my-auto">الفواتير</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/ قائمة
-                    الفواتير</span>
+                    الفواتير المدفوعة جزئيا</span>
             </div>
         </div>
         
@@ -35,24 +35,19 @@
             window.onload = function(){
                 notif({
                     msg:"deleting is finishing",
-                    type:"darnger"
+                    type:"success"
                 })
             }
         </script>
         @endif
         <!--div-->
         @if (session()->has('add'))
-        <div class="row">
-            @if (session()->has('delete'))
-            <script>
-                window.onload = function(){
-                    notif({
-                        msg:{{session()->get('add')}},
-                        type:"success"
-                    })
-                }
-            </script>
-            @endif	
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{session()->get('add')}}</strong>
+            <button class="colse" type="button" data-dismiss="alert" aria-label="close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>	
         @endif
         <div class="col-xl-12">
             <div class="card mg-b-20">
@@ -241,7 +236,7 @@
     <script>
         $('#Transfer_invoice').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget)
-            var invoice_id = button.data('id')
+            var invoice_id = button.data('invoice_id')
             var modal = $(this)
             modal.find('.modal-body #invoice_id').val(invoice_id);
         })

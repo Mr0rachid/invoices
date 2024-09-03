@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="{{ URL::asset('assets/plugins/sumoselect/sumoselect-rtl.css') }}">
     <!--Internal  TelephoneInput css-->
     <link rel="stylesheet" href="{{ URL::asset('assets/plugins/telephoneinput/telephoneinput-rtl.css') }}">
+    {{-- notif --}}
+    <link href="{{ URL::asset('assets/plugins/notify/css/notifIt.css') }}" rel="stylesheet" />
     
 @endsection
 @section('title')
@@ -32,14 +34,16 @@
 
     <!-- row -->
     <div class="row">
-        @if (session()->has('add'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>{{ session()->get('add') }}</strong>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
+            @if (session()->has('add'))
+            <script>
+                window.onload = function(){
+                    notif({
+                        msg:'تم اضافة الفاتورة بنجاح',
+                        type:"success"
+                    })
+                }
+            </script>
+            @endif
         <div class="col-lg-12 col-md-12">
             <div class="card">
                 <div class="card-body">
@@ -203,6 +207,9 @@
     <script src="{{ URL::asset('assets/plugins/spectrum-colorpicker/spectrum.js') }}"></script>
     <!-- Internal form-elements js -->
     <script src="{{ URL::asset('assets/js/form-elements.js') }}"></script>
+    {{-- notif --}}
+    <script src="{{ URL::asset('assets/plugins/notify/js/notifIt.js') }}"></script>
+    <script src="{{ URL::asset('assets/plugins/notify/js/notifit-custom.js') }}"></script>
     
     <script>
         // that for selector product 
