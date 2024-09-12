@@ -211,4 +211,9 @@ class InvoicesController extends Controller
         $invoices = invoices::where('status','مدفوعة جزئيا')->get();
         return view('invoices.invoices_partial',compact('invoices'));
     }
+
+    public function printinvoice($id){
+        $invoice = invoices::where('id',$id)->first();
+        return view('invoices.invoice',compact('invoice'));
+    }
 }

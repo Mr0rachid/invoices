@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ArchiveController;
+use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
@@ -37,7 +38,6 @@ Auth::routes(['register' => true]);
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-
 Route::get('idsection/{id}',[InvoicesController::class , 'getproducts'])->name('bb');
 
 Route::get('/invoicesdetails/{id}',[InvoicesDetailsController::class , 'details']);
@@ -59,6 +59,8 @@ Route::delete('/delete_invoice',[InvoicesController::class , 'destroy'])->name('
 Route::get('/editinvoice/{id}' , [InvoicesController::class , 'editenvoice']);
 
 Route::get('/show_invoice/{id}',[InvoicesController::class , 'show_invoice']);
+
+Route::get('/print_invoice/{id}',[InvoicesController::class , 'printinvoice']);
 
 Route::patch('invoices/update' , [InvoicesController::class , 'update']);
 

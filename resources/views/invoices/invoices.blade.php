@@ -126,6 +126,7 @@
                                                 <a class="dropdown-item" href="{{url('editinvoice',['id'=>$invoice->id])}}">تعديل</a>
                                                 <a class="dropdown-item" data-toggle="modal" data-target="#delete_invoice" data-id="{{$invoice->id}}" href="{{url('editinvoice',['id'=>$invoice->id])}}"><i class="text-danger fas fa-trash-alt">&nbsp;حذف</i></a>
                                                 <a class="dropdown-item" href="{{url('show_invoice',['id'=>$invoice->id])}}"><i class="text-success fas fa-money-bill">&nbsp;عملية الدفع</i></a>
+                                                <a class="dropdown-item" href="{{url('print_invoice',['id'=>$invoice->id])}}"><i class="text-success fas fa-print">&nbsp;عملية </i></a>
                                             </div>
                                         </div>
                                     </td>

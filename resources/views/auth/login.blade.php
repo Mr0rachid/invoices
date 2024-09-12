@@ -63,11 +63,8 @@ Invoices - تسجيل الدخول
                                                     {{ __('تسجيل الدخول') }}
                                                     </button>
 												</form>
-												{{-- <form action="{{route('inscription')}}" method="post">
-													<button type="submit" class="btn btn-main-primary btn-block">
-														{{ __('تسجيل مستخدم') }}
-														</button>
-												</form> --}}
+												<a href="/register" type="submit" class="btn btn-main-primary btn-block">تسجيل مستخدم</a>
+											
 											</div>
 										</div>
 									</div>
