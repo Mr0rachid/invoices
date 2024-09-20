@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('invoices_details', function (Blueprint $table) {
-            $table->id();
+            $table->engine("InnoDB");
+            $table->increments('id');
             $table->unsignedBigInteger('id_invoice');
             $table->foreign('id_invoice')->references('id')->on('invoices')->onDelete('cascade');
             $table->string('invoice_number',50);
@@ -20,7 +21,7 @@ return new class extends Migration
             $table->unsignedBigInteger('Section_id');
             $table->foreign('Section_id')->references('id')->on('sections')->onDelete('cascade');
             $table->string('Status',50);
-            $table->integer('value_Status',50);
+            $table->integer('value_Status');
             $table->text('note')->nullable();
             $table->date('payment_date')->nullable();
             $table->string('user',300);

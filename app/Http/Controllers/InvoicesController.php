@@ -2,16 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\invoicesexport;
 use App\Models\invoices;
 use App\Models\invoices_attachements;
 use App\Models\invoices_details;
 use App\Models\section;
+use App\Mail\contactmail;
+use App\Models\User;
+use App\Notifications\addinvoice;
 use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Notification;
+use Maatwebsite\Excel\Facades\Excel;
 
 class InvoicesController extends Controller
 {
@@ -83,6 +90,11 @@ class InvoicesController extends Controller
             $name_image = $request->pic->getClientOriginalName();
             $request->pic->move(public_path('attachements/'.$invoice_number),$name_image);
         }
+
+        // $user = User::first();
+        // Notification::send($user, new addinvoice($invoice_id));
+
+        Mail::to("contenttik07@gmail.com")->send(new contactmail($invoice_id));
 
         session()->flash('add');
         return back();
@@ -215,5 +227,9 @@ class InvoicesController extends Controller
     public function printinvoice($id){
         $invoice = invoices::where('id',$id)->first();
         return view('invoices.invoice',compact('invoice'));
+    }
+
+    public function export(){
+        return Excel::download(new invoicesexport, 'invoices.xlsx');
     }
 }

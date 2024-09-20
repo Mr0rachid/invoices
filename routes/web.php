@@ -3,6 +3,8 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ArchiveController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\rolecontroller;
+use App\Http\Controllers\usercontroller;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
@@ -91,5 +93,12 @@ Route::patch('updateproduct',[ProductsController::class , 'update'])->name('upda
 Route::patch('update',[SectionController::class ,'update'])->name('update');
 
 Route::delete('destroy',[SectionController::class ,'destroy'])->name('destroy');
+
+Route::get('export_invoices',[InvoicesController::class , 'export']);
+
+Route::group(['middleware' => ['auth']], function() {
+    Route::resource('roles',rolecontroller::class);
+    Route::resource('users',usercontroller::class);
+    });
 
 Route::get('/{page}',[AdminController::class,'index']);
