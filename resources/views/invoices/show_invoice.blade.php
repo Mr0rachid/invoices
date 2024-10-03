@@ -155,6 +155,7 @@
                             </div>
                         </div><br>
 
+                        @can('تغير حالة الدفع')
                         <div class="row">
                             <div class="col">
                                 <label for="">حالة الدفع</label>
@@ -174,7 +175,7 @@
                         <div class="d-flex justify-content-center">
                             <button type="submit" class="btn btn-primary">تحديث حالة الدفع </button>
                         </div>
-
+                        @endcan
 
                     </form>
                 </div>

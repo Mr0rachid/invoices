@@ -16,11 +16,12 @@ class rolecontroller extends Controller
 
 function __construct()
 {
-$this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index','store']]);
-$this->middleware('permission:role-create', ['only' => ['create','store']]);
-$this->middleware('permission:role-edit', ['only' => ['edit','update']]);
-$this->middleware('permission:role-delete', ['only' => ['destroy']]);
+$this->middleware('permission:عرض صلاحية', ['only' => ['index','store']]);
+$this->middleware('permission:اضافة صلاحية', ['only' => ['create','store']]);
+$this->middleware('permission:تعديل صلاحية', ['only' => ['edit','update']]);
+$this->middleware('permission:حذف صلاحية', ['only' => ['destroy']]);
 }
+
 /**
 * Display a listing of the resource.
 *
@@ -54,8 +55,11 @@ $this->validate($request, [
 'name' => 'required|unique:roles,name',
 'permission' => 'required',
 ]);
+$permission = $request->permission;
+$permissionNames = Permission::whereIn('id', $permission)->pluck('name')->toArray();
+
 $role = Role::create(['name' => $request->input('name')]);
-$role->syncPermissions($request->input('permission'));
+$role->syncPermissions($permissionNames);
 return redirect()->route('roles.index')
 ->with('success','Role created successfully');
 }
@@ -104,7 +108,9 @@ $this->validate($request, [
 $role = Role::find($id);
 $role->name = $request->input('name');
 $role->save();
-$role->syncPermissions($request->input('permission'));
+$permission = $request->permission;
+$permissionNames = Permission::whereIn('id', $permission)->pluck('name')->toArray();
+$role->syncPermissions($permissionNames);
 return redirect()->route('roles.index')
 ->with('success','Role updated successfully');
 }

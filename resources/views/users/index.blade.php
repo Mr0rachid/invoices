@@ -43,9 +43,9 @@
         <div class="card">
             <div class="card-header pb-0">
                 <div class="col-sm-1 col-md-2">
-                    @can('اضافة مستخدم')
+                    {{-- @can('اضافة مستخدم') --}}
                         <a class="btn btn-primary btn-sm" href="{{ route('users.create') }}">اضافة مستخدم</a>
-                    @endcan
+                    {{-- @endcan --}}
                 </div>
             </div>
             <div class="card-body">
@@ -68,13 +68,13 @@
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>
-                                        @if ($user->Status == 'مفعل')
+                                        @if ($user->status == 'مفعل')
                                             <span class="label text-success d-flex">
-                                                <div class="dot-label bg-success ml-1"></div>{{ $user->Status }}
+                                                <div class="dot-label bg-success ml-1"></div>{{ $user->status }}
                                             </span>
                                         @else
                                             <span class="label text-danger d-flex">
-                                                <div class="dot-label bg-danger ml-1"></div>{{ $user->Status }}
+                                                <div class="dot-label bg-danger ml-1"></div>{{ $user->status }}
                                             </span>
                                         @endif
                                     </td>

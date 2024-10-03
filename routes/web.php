@@ -3,6 +3,8 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ArchiveController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\ControllerCostumer_Report;
+use App\Http\Controllers\ControllerInvoices_Report;
 use App\Http\Controllers\rolecontroller;
 use App\Http\Controllers\usercontroller;
 use Illuminate\Support\Facades\Route;
@@ -100,5 +102,11 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('roles',rolecontroller::class);
     Route::resource('users',usercontroller::class);
     });
+
+Route::get('invoice_report',[ControllerInvoices_Report::class,'index']);
+
+Route::post('search_invoices',[ControllerInvoices_Report::class , 'search']);
+
+Route::get('costumer',[ControllerCostumer_Report::class , 'index']);
 
 Route::get('/{page}',[AdminController::class,'index']);

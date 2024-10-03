@@ -41,12 +41,12 @@ $this->validate($request, [
 'name' => 'required',
 'email' => 'required|email|unique:users,email',
 'password' => 'required|same:confirm-password',
-'roles' => 'required'
+'roles_name' => 'required'
 ]);
 $input = $request->all();
 $input['password'] = Hash::make($input['password']);
 $user = User::create($input);
-$user->assignRole($request->input('roles'));
+$user->assignRole($request->input('roles_name'));
 return redirect()->route('users.index')
 ->with('success','User created successfully');
 }
@@ -108,8 +108,9 @@ return redirect()->route('users.index')
 * @param  int  $id
 * @return \Illuminate\Http\Response
 */
-public function destroy($id)
+public function destroy(Request $request)
 {
+$id = $request->user_id;
 User::find($id)->delete();
 return redirect()->route('users.index')
 ->with('success','User deleted successfully');
