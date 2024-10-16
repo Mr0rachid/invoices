@@ -9,6 +9,7 @@ use App\Models\invoices_details;
 use App\Models\section;
 use App\Mail\contactmail;
 use App\Models\User;
+use App\Notifications\add_note_invoice;
 use App\Notifications\addinvoice;
 use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
@@ -94,8 +95,16 @@ class InvoicesController extends Controller
         // $user = User::first();
         // Notification::send($user, new addinvoice($invoice_id));
 
-        Mail::to("contenttik07@gmail.com")->send(new contactmail($invoice_id));
+        // send invoice notification
 
+        // $invoice = invoices::latest()->first()->id;
+        // Mail::to("contenttik07@gmail.com")->send(new contactmail($invoice));
+
+        $user = User::get();
+        $invoice = invoices::latest()->first();
+        
+        Notification::send($user, new add_note_invoice($invoice));
+        
         session()->flash('add');
         return back();
     }
@@ -231,5 +240,21 @@ class InvoicesController extends Controller
 
     public function export(){
         return Excel::download(new invoicesexport, 'invoices.xlsx');
+    }
+
+    public function readall(){
+        $user = Auth::user()->unreadNotifications;
+        
+        var_dump('<pre>');
+        var_dump($user);
+        var_dump('</pre>');
+        // if($user){
+        //     $user->markAsRead();
+        //     return back();
+            
+        // }
+    }
+    public function read(Request $request){
+
     }
 }

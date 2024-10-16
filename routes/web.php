@@ -109,4 +109,8 @@ Route::post('search_invoices',[ControllerInvoices_Report::class , 'search']);
 
 Route::get('costumer',[ControllerCostumer_Report::class , 'index']);
 
+Route::post('search_customer',[ControllerCostumer_Report::class , 'search']);
+
+Route::get('readall',[InvoicesController::class , 'readall']);
+
 Route::get('/{page}',[AdminController::class,'index']);

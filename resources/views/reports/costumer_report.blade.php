@@ -55,7 +55,7 @@
 
             <div class="card-header pb-0">
 
-                <form action="/Search_customers" method="POST" role="search" autocomplete="off">
+                <form action="/search_customer" method="POST" role="search" autocomplete="off">
                     {{ csrf_field() }}
 
 
@@ -140,24 +140,24 @@
                                     <?php $i++; ?>
                                     <tr>
                                         <td>{{ $i }}</td>
-                                        <td>{{ $invoice->invoice_number }} </td>
-                                        <td>{{ $invoice->invoice_Date }}</td>
-                                        <td>{{ $invoice->Due_date }}</td>
+                                        <td>{{ $invoice['invoice-number'] }} </td>
+                                        <td>{{ $invoice['invoice-date'] }}</td>
+                                        <td>{{ $invoice->due_date }}</td>
                                         <td>{{ $invoice->product }}</td>
                                         <td><a
-                                                href="{{ url('InvoicesDetails') }}/{{ $invoice->id }}">{{ $invoice->section->section_name }}</a>
+                                                href="{{ url('invoicesdetails') }}/{{ $invoice->id }}">{{ $invoice->section->section_name }}</a>
                                         </td>
-                                        <td>{{ $invoice->Discount }}</td>
-                                        <td>{{ $invoice->Rate_VAT }}</td>
-                                        <td>{{ $invoice->Value_VAT }}</td>
-                                        <td>{{ $invoice->Total }}</td>
+                                        <td>{{ $invoice->discount }}</td>
+                                        <td>{{ $invoice['rate-vat'] }}</td>
+                                        <td>{{ $invoice['value-vat'] }}</td>
+                                        <td>{{ $invoice->total }}</td>
                                         <td>
-                                            @if ($invoice->Value_Status == 1)
-                                                <span class="text-success">{{ $invoice->Status }}</span>
-                                            @elseif($invoice->Value_Status == 2)
-                                                <span class="text-danger">{{ $invoice->Status }}</span>
+                                            @if ($invoice['value-status'] == 1)
+                                                <span class="text-success">{{ $invoice->status }}</span>
+                                            @elseif($invoice['value-status'] == 2)
+                                                <span class="text-danger">{{ $invoice->status }}</span>
                                             @else
-                                                <span class="text-warning">{{ $invoice->Status }}</span>
+                                                <span class="text-warning">{{ $invoice->status }}</span>
                                             @endif
 
                                         </td>
@@ -172,6 +172,7 @@
                 </div>
             </div>
         </div>
+        
     </div>
 </div>
 <!-- row closed -->
@@ -239,6 +240,7 @@
                     success: function(data){
                         $('select[name="product"]').empty();
                         $.each(JSON.parse("["+data+"]"), function(num,mydata){
+                            $('select[name="product"]').append('<option value="الكل">الكل</option>');
                             $.each(mydata ,function(key,value){
                                 $('select[name="product"]').append('<option value="'+value+'">'+value+'</option>');
                             });
